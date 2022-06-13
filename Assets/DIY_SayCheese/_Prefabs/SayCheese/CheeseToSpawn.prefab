@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &682901625137612278
+--- !u!1 &2256588552795301502
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,47 +8,47 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 682901625137612274}
-  - component: {fileID: 682901625137612275}
-  - component: {fileID: 682901625137612272}
-  - component: {fileID: 682901625137612273}
-  - component: {fileID: 682901625137612173}
+  - component: {fileID: 2256588552795301443}
+  - component: {fileID: 2256588552795301442}
+  - component: {fileID: 2256588552795301501}
+  - component: {fileID: 2256588552795301500}
+  - component: {fileID: 2256588552795301503}
   m_Layer: 0
-  m_Name: CheesePlateSpawn
-  m_TagString: Untagged
+  m_Name: CheeseToSpawn
+  m_TagString: Cheese
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &682901625137612274
+--- !u!4 &2256588552795301443
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 682901625137612278}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.59, y: 4.76, z: 2.24}
-  m_LocalScale: {x: 0.3945, y: 0.3945, z: 0.3945}
+  m_GameObject: {fileID: 2256588552795301502}
+  m_LocalRotation: {x: -0.5, y: 0.5, z: -0.5, w: 0.5}
+  m_LocalPosition: {x: -7.1160865, y: 4.876351, z: 2.633}
+  m_LocalScale: {x: 0.5064046, y: 0.5064046, z: 0.5064046}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &682901625137612275
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: -90}
+--- !u!33 &2256588552795301442
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 682901625137612278}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &682901625137612272
+  m_GameObject: {fileID: 2256588552795301502}
+  m_Mesh: {fileID: -1029508728803502468, guid: c387cd2a597469a4c88c56e5e83f2f02, type: 3}
+--- !u!23 &2256588552795301501
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 682901625137612278}
+  m_GameObject: {fileID: 2256588552795301502}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -61,7 +61,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 95752a560177d08479b3da3f4828eab5, type: 2}
+  - {fileID: 2100000, guid: b47267fa13892a441aa34edb8ef1d670, type: 2}
+  - {fileID: 2100000, guid: 8d2ee62fbcdec9d4a9c241a6c8432f4c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,26 +84,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &682901625137612273
-BoxCollider:
+--- !u!64 &2256588552795301500
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 682901625137612278}
+  m_GameObject: {fileID: 2256588552795301502}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &682901625137612173
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -1029508728803502468, guid: c387cd2a597469a4c88c56e5e83f2f02, type: 3}
+--- !u!54 &2256588552795301503
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 682901625137612278}
+  m_GameObject: {fileID: 2256588552795301502}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -111,4 +113,4 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
