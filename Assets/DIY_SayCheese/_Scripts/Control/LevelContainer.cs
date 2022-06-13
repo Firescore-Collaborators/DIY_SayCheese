@@ -5,7 +5,7 @@ using NaughtyAttributes;
 using UnityEngine.SceneManagement;
 
 public enum LevelType{
-    money = 1,
+    Cheese = 1,
 
 }
 

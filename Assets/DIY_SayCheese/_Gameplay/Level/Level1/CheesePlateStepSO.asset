@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 191f62ec592c58a4697aaa305ba1ee99, type: 3}
-  m_Name: LevelContainer
+  m_Script: {fileID: 11500000, guid: 8728335aa89cbca4090f37a4ef73500d, type: 3}
+  m_Name: CheesePlateStepSO
   m_EditorClassIdentifier: 
-  levels:
-  - {fileID: 11400000, guid: 5f124b5cdbbaaed4cbf4bc9338ffb251, type: 2}
+  stepType: 2
+  cameraName: TopDown
+  blendSpeed: 1

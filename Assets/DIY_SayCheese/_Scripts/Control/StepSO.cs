@@ -4,13 +4,9 @@ using UnityEngine;
 using NaughtyAttributes;
 public enum StepType 
 {
-    dirtClean = 0,
-    stamp = 1,
-    painting = 2,
-    stencil = 3,
-    sticker = 4,
-    moneyCut = 5,
-    levelEnd = 6,
+    cutting = 0,
+    levelEnd = 1,
+    plate = 2,
 }
 public class StepSO : ScriptableObject
 {

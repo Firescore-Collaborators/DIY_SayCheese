@@ -34,6 +34,13 @@ public class MeshSliceFakeController : MonoBehaviour
     public float levelObjectSpeed = 1f;
     int currentSliceIndex = 0;
 
+    LevelObject levelObjectScript
+    {
+        get
+        {
+            return GameManager.Instance.levelObject;
+        }
+    }
     void OnEnable()
     {
         Slice += OnSlice;
@@ -48,6 +55,7 @@ public class MeshSliceFakeController : MonoBehaviour
 
     void Start()
     {
+        levelObject = GameManager.Instance.levelObject.transform;
         InitSlices();
         AssingDir();
         cutterStartRot = cutter.transform.rotation;

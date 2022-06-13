@@ -6,13 +6,9 @@ public static class StepStateMachine
 {
     
     public static Dictionary<StepType,string> stepStates = new Dictionary<StepType, string>{
-        {StepType.dirtClean, "DirtCleanState"},
-        {StepType.painting, "PaintStepState"},
-        {StepType.sticker, "StickerStepState"},
+        {StepType.cutting, "CuttingStepState"},
         {StepType.levelEnd, "LevelCompleteStepState"},
-        {StepType.stencil, "StencilStepState"},
-        {StepType.stamp, "StampStepState"},
-        {StepType.moneyCut, "MoneyCutStepState"},
+        {StepType.plate, "CheesePlateStepState"},
     };
 
 
