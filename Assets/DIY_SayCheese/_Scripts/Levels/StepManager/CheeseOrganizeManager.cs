@@ -8,14 +8,17 @@ using NaughtyAttributes;
 public class CheeseOrganizeManager : MonoBehaviour
 {
 
+    public List<PlateQuarter> plateQuarters = new List<PlateQuarter>();
     bool held = false;
     [SerializeField] bool drag;
     public GameObject spawnObject;
     public Transform cheesePlate;
     public Transform spawnParent;
     Vector3 lastMousePos;
+    public Image fillImage;
     [SerializeField] LayerMask layer;
     public float spawnHeight = 2.5f;
+    int currentZone = 0;
 
     void Update()
     {
@@ -58,7 +61,7 @@ public class CheeseOrganizeManager : MonoBehaviour
 
     void SpawnFood()
     {
-        if(!held) return;
+        if (!held) return;
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -69,15 +72,43 @@ public class CheeseOrganizeManager : MonoBehaviour
                 GameObject cheese = Instantiate(spawnObject, new Vector3(hit.collider.transform.position.x, hit.collider.transform.position.y + spawnHeight, hit.collider.transform.position.z),
                                                  hit.collider.transform.rotation, spawnParent);
 
-                cheese.AddComponent<LerpObjectPositionBehavior>().LerpObject(cheese.transform, hit.collider.transform.position, 0.5f);
+                cheese.AddComponent<LerpObjectPositionBehavior>().LerpObject(cheese.transform, hit.collider.transform.position, 0.5f, () =>
+                {
+                    /*PlateQuarter plateQuarter = plateQuarters[currentZone];
+                    print(plateQuarter.currentCount);
+                    if (plateQuarter.currentCount == plateQuarter.count)
+                    {
+                        Rotate();
+                        currentZone++;
+                    }*/
+                });
                 hit.collider.enabled = false;
+                hit.collider.transform.parent.GetComponent<PlateQuarter>().Increase();
             }
         }
     }
 
     void Progress()
     {
-
+        float currentValue = plateQuarters[currentZone].currentCount;
+        fillImage.fillAmount = Remap.remap(currentValue, 0, plateQuarters[currentZone].count, (currentZone * (1f / plateQuarters.Count)), ((currentZone + 1) * (1f / plateQuarters.Count)));
+        if (currentValue >= plateQuarters[currentZone].count)
+        {
+            currentZone++;
+            if (currentZone >= plateQuarters.Count)
+            {
+                this.enabled = false;
+                Timer.Delay(2f, () =>
+                {
+                    GameManager.Instance.NextStep();
+                });
+                return;
+            }
+            Timer.Delay(1.5f, () =>
+            {
+                Rotate();
+            });
+        }
     }
 
     [Button]
