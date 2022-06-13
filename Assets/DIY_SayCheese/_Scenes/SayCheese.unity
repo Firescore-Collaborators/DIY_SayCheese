@@ -639,7 +639,7 @@ MonoBehaviour:
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 1
-    m_Time: 0
+    m_Time: 1
     m_CustomCurve:
       serializedVersion: 2
       m_Curve: []
@@ -4906,6 +4906,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   interval: 0.1
+  spawnHeight: 2
   spawnObject: {fileID: 682901625137612278, guid: fd324edccdaa19043b01a8b64a23e675,
     type: 3}
   spawnParent: {fileID: 767493031}
