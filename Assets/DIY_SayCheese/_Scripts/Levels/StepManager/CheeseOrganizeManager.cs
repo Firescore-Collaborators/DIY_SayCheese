@@ -19,7 +19,7 @@ public class CheeseOrganizeManager : MonoBehaviour
 
     void Update()
     {
-        //SetInput();
+        SetInput();
         SpawnFood();
         Progress();
     }
@@ -59,7 +59,7 @@ public class CheeseOrganizeManager : MonoBehaviour
     void SpawnFood()
     {
         if(!held) return;
-        
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out RaycastHit hit, 100, layer))
@@ -70,6 +70,7 @@ public class CheeseOrganizeManager : MonoBehaviour
                                                  hit.collider.transform.rotation, spawnParent);
 
                 cheese.AddComponent<LerpObjectPositionBehavior>().LerpObject(cheese.transform, hit.collider.transform.position, 0.5f);
+                hit.collider.enabled = false;
             }
         }
     }
