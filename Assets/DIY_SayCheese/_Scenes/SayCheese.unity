@@ -4870,7 +4870,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &791264887
 Transform:
   m_ObjectHideFlags: 0
@@ -7921,6 +7921,18 @@ PrefabInstance:
       propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1680412412039873114, guid: a2bbe36be1db8ae4a9a371de482b5211,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 2534964839176971238, guid: 92c368b528d63334298f173bb9a21710,
+        type: 3}
+    - target: {fileID: 3918860946030910563, guid: a2bbe36be1db8ae4a9a371de482b5211,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 2534964839176971238, guid: 92c368b528d63334298f173bb9a21710,
+        type: 3}
     - target: {fileID: 3918860946030945731, guid: a2bbe36be1db8ae4a9a371de482b5211,
         type: 3}
       propertyPath: ShapeModule.m_Scale.x
