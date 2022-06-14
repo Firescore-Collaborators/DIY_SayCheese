@@ -10,12 +10,16 @@ public class CheeseGratingManager : MonoBehaviour
     public float cheeseMaskLerpValue = 0;
     public bool held = false;
     public bool toMove = true;
+    bool isMoving = false;
+    bool coroutineStarted = false;
     public float cheeseMoveSpeed = 0.11f;
     public float dragSpeed = 0.1f;
     public Direction direction = Direction.Down;
     Vector3 moveDir;
     Vector3 lastMousePos;
     public float dragDir;
+    public ParticleSystem cheeseParticle;
+
     void Start()
     {
         AssignDirection();
@@ -24,7 +28,9 @@ public class CheeseGratingManager : MonoBehaviour
     void Update()
     {
         SetInput();
+        IsMoving();
         CheeseMove();
+        CheeseParticle();
     }
 
     void SetInput()
@@ -40,7 +46,7 @@ public class CheeseGratingManager : MonoBehaviour
         if (held)
         {
             Vector3 dragMouse = Input.mousePosition - lastMousePos;
-            dragDir = Mathf.Clamp(dragMouse.x, -10f, 10f);
+            dragDir = Mathf.Clamp(dragMouse.x, -15f, 15f);
         }
         else
         {
@@ -77,22 +83,40 @@ public class CheeseGratingManager : MonoBehaviour
     {
         if (!held) return;
         if (!toMove) return;
+        if (!isMoving) return;
+
         cheeseBlock.transform.position += moveDir * cheeseMoveSpeed * Time.deltaTime;
 
         //Cheese Mask
         CheeseMask();
 
         //Horizontal
-        if (dragDir == 0) return;
+        cheeseBlock.transform.position += cheeseBlock.transform.right * dragDir * dragSpeed * Time.deltaTime;
+
         // Vector3 horizontalPos = (cheeseBlock.transform.position) + (cheeseBlock.transform.right * dragDir * dragSpeed * Time.deltaTime);
         // float posX = Mathf.Clamp(horizontalPos.x, -2.311f, -1.62f);
         // if (posX == -2.311f && dragDir > 0 || posX == -1.62f && dragDir < 0) return;
 
         //cheeseBlock.transform.position = new Vector3(posX, horizontalPos.y, horizontalPos.z);
-
-        cheeseBlock.transform.position += cheeseBlock.transform.right * dragDir * dragSpeed * Time.deltaTime;
     }
 
+    void CheeseParticle()
+    {
+        if (toMove && isMoving)
+        {
+            if (!cheeseParticle.isPlaying)
+            {
+                cheeseParticle.Play();
+            }
+        }
+        else
+        {
+            if (cheeseParticle.isPlaying)
+            {
+                cheeseParticle.Stop();
+            }
+        }
+    }
     void CheeseMask()
     {
         float cheeseMask = Remap.remap(cheeseMaskLerpValue, 0, 1, 1, .1f);
@@ -107,5 +131,28 @@ public class CheeseGratingManager : MonoBehaviour
             cheeseMaskLerpValue = 1;
             toMove = false;
         }
+    }
+
+    void IsMoving()
+    {
+        if (dragDir == 0)
+        {
+            if (coroutineStarted) return;
+
+            coroutineStarted = true;
+            StartCoroutine(ChangeIsMove());
+        }
+        else
+        {
+            StopAllCoroutines();
+            coroutineStarted = false;
+            isMoving = true;
+        }
+    }
+
+    IEnumerator ChangeIsMove()
+    {
+        yield return new WaitForSeconds(1);
+        isMoving = false;
     }
 }
