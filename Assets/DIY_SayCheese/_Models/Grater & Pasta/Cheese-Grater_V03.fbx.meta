@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6137bcbd1b505234db0b7cd85eb9ce68
+guid: 1c513a0e0d250e64caae58100fecf644
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
@@ -7,13 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Metal.001
-    second: {fileID: 2100000, guid: 9f6e508a7e1ca424ea9431067599d7c3, type: 2}
+      name: Green-color
+    second: {fileID: 2100000, guid: d0fa874313535d34b8944f1380c7019b, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Plastic-Color
-    second: {fileID: 2100000, guid: 877deb0b246658848bfc415dc28936e0, type: 2}
+      name: Metal
+    second: {fileID: 2100000, guid: a60ce7a6b11a3af42b4e567c53dbeefa, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -44,7 +44,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 1.2
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -95,7 +95,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
+    globalScale: 0.012
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

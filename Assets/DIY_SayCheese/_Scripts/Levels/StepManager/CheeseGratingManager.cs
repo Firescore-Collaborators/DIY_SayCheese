@@ -6,6 +6,7 @@ public class CheeseGratingManager : MonoBehaviour
 {
 
     public static event System.Action cheeseBlobSpawned;
+    public CameraShake cameraShake;
     public MeshRenderer cheeseBlock;
     [SerializeField] List<SkinnedMeshRenderer> cheeseList = new List<SkinnedMeshRenderer>();
     List<Animator> currentPlayingAnimators = new List<Animator>();
@@ -14,7 +15,7 @@ public class CheeseGratingManager : MonoBehaviour
     public bool held = false;
     public bool toMove = true;
     public bool toSpawnBlob = true;
-    bool isMoving = false;
+    public bool isMoving = false;
     bool coroutineStarted = false;
     public float cheeseMoveSpeed = 0.11f;
     public float dragSpeed = 0.1f;
@@ -22,6 +23,7 @@ public class CheeseGratingManager : MonoBehaviour
     public Direction direction = Direction.Down;
     Vector3 moveDir;
     Vector3 lastMousePos;
+    Vector3 lastCheesPos;
     Vector3 cheeseStartPos;
     public Vector2 horizontalLimit = new Vector2(-2.46f, -1.62f);
     public float dragDir;
@@ -29,7 +31,9 @@ public class CheeseGratingManager : MonoBehaviour
     public Transform cheeseEndPos;
     Transform cheeseParent;
     public float gratedAmount;
+    public float shakeDuration;
     public float cheeseSpawnAmount = 0.3f;
+    public float cameraShakeInterval = 0.5f;
 
 
 
@@ -42,6 +46,7 @@ public class CheeseGratingManager : MonoBehaviour
     {
         cheeseStartPos = cheeseBlock.transform.position;
         cheeseParent = cheeseBlock.transform.parent;
+        lastCheesPos = cheeseParent.transform.position;
         //AddToList(cheeseBlobParent,cheeseBlobs);
         AssignDirection();
     }
@@ -51,7 +56,7 @@ public class CheeseGratingManager : MonoBehaviour
         SetInput();
         IsMoving();
         CheeseMove();
-        CheeseParticle();
+        //CheeseParticle();
         ControlCheeseAnim();
     }
 
@@ -105,15 +110,42 @@ public class CheeseGratingManager : MonoBehaviour
     {
         if (!held) return;
         if (!toMove) return;
-        if (!isMoving) return;
+
+        //Horizontal
+        Vector3 horizontalPos = (cheeseParent.transform.position) + (cheeseParent.transform.right * dragDir * dragSpeed * Time.deltaTime);
+        float posX = Mathf.Clamp(horizontalPos.x, horizontalLimit.x, horizontalLimit.y);
+        if (posX == horizontalLimit.x && dragDir > 0 || posX == horizontalLimit.y && dragDir < 0) return;
+
+        cheeseParent.transform.position = new Vector3(posX, horizontalPos.y, horizontalPos.z);
+
+        if (!isMoving)
+        {
+            if (cheeseParticle.isPlaying)
+            {
+                cheeseParticle.Stop();
+            }
+            return;
+        }
 
         cheeseBlock.transform.position += moveDir * cheeseMoveSpeed * Time.deltaTime;
+
+        if (!cheeseParticle.isPlaying)
+        {
+            cheeseParticle.Play();
+        }
 
         //Cheese Mask
         CheeseMask();
 
         //Grated amount
         gratedAmount += Time.deltaTime;
+        shakeDuration += Time.deltaTime;
+
+        if(shakeDuration >= cameraShakeInterval)
+        {
+            cameraShake.Shake();
+            shakeDuration = 0;
+        }
 
         if (gratedAmount > cheeseSpawnAmount)
         {
@@ -122,23 +154,18 @@ public class CheeseGratingManager : MonoBehaviour
             LerpRandomCheeese();
             LerpRandomCheeese();
             LerpRandomCheeese();
-            if(toSpawnBlob)
-            cheeseBlobSpawned?.Invoke();
+            if (toSpawnBlob)
+                cheeseBlobSpawned?.Invoke();
         }
 
-        //Horizontal
         //cheeseBlock.transform.position += cheeseBlock.transform.right * dragDir * dragSpeed * Time.deltaTime;
 
-        Vector3 horizontalPos = (cheeseParent.transform.position) + (cheeseParent.transform.right * dragDir * dragSpeed * Time.deltaTime);
-        float posX = Mathf.Clamp(horizontalPos.x, horizontalLimit.x, horizontalLimit.y);
-        if (posX == horizontalLimit.x && dragDir > 0 || posX == horizontalLimit.y && dragDir < 0) return;
 
-        cheeseParent.transform.position = new Vector3(posX, horizontalPos.y, horizontalPos.z);
     }
 
     void ControlCheeseAnim()
     {
-        if (held) return;
+        if (isMoving) return;
 
         for (int i = 0; i < currentPlayingAnimators.Count; i++)
         {
@@ -184,25 +211,29 @@ public class CheeseGratingManager : MonoBehaviour
 
     void IsMoving()
     {
-        if (dragDir <= 0)
+        if (!held)
         {
-            if (coroutineStarted) return;
-
-            coroutineStarted = true;
-            isMoving = false;
-            //StartCoroutine(ChangeIsMove());
+            if (cheeseParticle.isPlaying)
+            {
+                cheeseParticle.Stop();
+            }
+            return;
+        }
+        if (cheeseParent.transform.position.x < lastCheesPos.x)
+        {
+            StopAllCoroutines();
+            isMoving = true;
         }
         else
         {
-            StopAllCoroutines();
-            coroutineStarted = false;
-            isMoving = true;
+            StartCoroutine(ChangeIsMove());
         }
+        lastCheesPos = cheeseParent.transform.position;
     }
 
     IEnumerator ChangeIsMove()
     {
-        yield return new WaitForSeconds(.1f);
+        yield return new WaitForSeconds(.2f);
         isMoving = false;
     }
 
