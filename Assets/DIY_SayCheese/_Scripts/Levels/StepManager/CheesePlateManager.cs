@@ -7,7 +7,7 @@ using NaughtyAttributes;
 
 public class CheesePlateManager : MonoBehaviour
 {
-    public List<ColliderZone> colliderZone = new List<ColliderZone>();
+    /*public List<ColliderZone> colliderZone = new List<ColliderZone>();
     bool held = false;
     [SerializeField] bool drag;
     [SerializeField] LayerMask layer;
@@ -119,6 +119,6 @@ public class CheesePlateManager : MonoBehaviour
                                                                             cheesePlate.rotation.eulerAngles.y + 90.0f,
                                                                             cheesePlate.rotation.eulerAngles.z), 0.5f);
     }
-
+    */
 
 }

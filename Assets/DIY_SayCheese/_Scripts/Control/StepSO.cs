@@ -8,6 +8,7 @@ public enum StepType
     levelEnd = 1,
     plate = 2,
     grate = 3,
+    pastaPlate = 4,
 }
 public class StepSO : ScriptableObject
 {

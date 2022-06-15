@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIElements : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class UIElements : MonoBehaviour
     public GameObject stepUI;
 
     public List<GameObject> stepUIs = new List<GameObject>();
+    public Image blinkPanel;
 
     public void OnEnable()
     {
@@ -56,4 +58,5 @@ public class UIElements : MonoBehaviour
     {
         stepPanel.gameObject.SetActive(false);
     }
+
 }

@@ -10,6 +10,7 @@ public static class StepStateMachine
         {StepType.levelEnd, "LevelCompleteStepState"},
         {StepType.plate, "CheesePlateStepState"},
         {StepType.grate, "CheeseGrateStepState"},
+        {StepType.pastaPlate, "CheesePastaStepState"},
     };
 
 

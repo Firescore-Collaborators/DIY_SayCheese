@@ -4,14 +4,32 @@ using UnityEngine;
 
 public class ColliderZone : MonoBehaviour
 {
-    public float count;
+    public List<SkinnedMeshRenderer> cheeseList = new List<SkinnedMeshRenderer>();
+    public float gratedAmount;
+
+    SkinnedMeshRenderer currentMesh;
+    bool isGrating = true;
+
+    void Start()
+    {
+        for(int i = 0; i < transform.childCount; i++)
+        {
+            cheeseList.Add(transform.GetChild(i).GetComponent<SkinnedMeshRenderer>());
+        }
+    }
+    
+    void Update()
+    {
+
+    }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Cheese")
-        {
-            count++;
-            other.tag = "Untagged";
-        }
+        isGrating = true;
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        isGrating = false;
     }
 }
