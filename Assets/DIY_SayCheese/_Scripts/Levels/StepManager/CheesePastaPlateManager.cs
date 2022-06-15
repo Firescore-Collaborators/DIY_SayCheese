@@ -5,6 +5,7 @@ using UnityEngine;
 public class CheesePastaPlateManager : MonoBehaviour
 {
     public ParticleSystem particles;
+    public Animator anim;
     bool held = false;
     [SerializeField] bool canPlay;
     bool CanPlay
@@ -59,6 +60,7 @@ public class CheesePastaPlateManager : MonoBehaviour
             if (!particles.isPlaying)
             {
                 particles.Play();
+                anim.Play("Season");
             }
         }
         else
@@ -66,6 +68,7 @@ public class CheesePastaPlateManager : MonoBehaviour
             if (particles.isPlaying)
             {
                 particles.Stop();
+                anim.Play("Idle");
             }
         }
     }

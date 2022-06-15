@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class CheeseGratingManager : MonoBehaviour
 {
-    public MeshRenderer cheeseBlock;
 
+    public static event System.Action cheeseBlobSpawned;
+    public MeshRenderer cheeseBlock;
     [SerializeField] List<SkinnedMeshRenderer> cheeseList = new List<SkinnedMeshRenderer>();
-    [SerializeField] Transform cheeseBlobParent;
     List<Animator> currentPlayingAnimators = new List<Animator>();
-    [SerializeField] List<GameObject> cheeseBlobs = new List<GameObject>();
-    public GameObject cheeseOnGrate;
     public float cheeseMaskLerpSpeed = 12f;
     public float cheeseMaskLerpValue = 0;
     public bool held = false;
     public bool toMove = true;
+    public bool toSpawnBlob = true;
     bool isMoving = false;
     bool coroutineStarted = false;
     public float cheeseMoveSpeed = 0.11f;
@@ -31,8 +30,9 @@ public class CheeseGratingManager : MonoBehaviour
     Transform cheeseParent;
     public float gratedAmount;
     public float cheeseSpawnAmount = 0.3f;
-    public Vector3 center;
-    public Vector3 size;
+
+
+
     void Start()
     {
         Init();
@@ -43,8 +43,6 @@ public class CheeseGratingManager : MonoBehaviour
         cheeseStartPos = cheeseBlock.transform.position;
         cheeseParent = cheeseBlock.transform.parent;
         //AddToList(cheeseBlobParent,cheeseBlobs);
-        cheeseBlobs.Clear();
-        AddToList(cheeseBlobParent, cheeseBlobs);
         AssignDirection();
     }
 
@@ -113,18 +111,19 @@ public class CheeseGratingManager : MonoBehaviour
 
         //Cheese Mask
         CheeseMask();
-        
+
         //Grated amount
         gratedAmount += Time.deltaTime;
 
-        if(gratedAmount > cheeseSpawnAmount)
+        if (gratedAmount > cheeseSpawnAmount)
         {
             gratedAmount = 0;
             LerpRandomCheeese();
             LerpRandomCheeese();
             LerpRandomCheeese();
             LerpRandomCheeese();
-            RandomCheeseBlobs();
+            if(toSpawnBlob)
+            cheeseBlobSpawned?.Invoke();
         }
 
         //Horizontal
@@ -139,7 +138,7 @@ public class CheeseGratingManager : MonoBehaviour
 
     void ControlCheeseAnim()
     {
-        if(held) return;
+        if (held) return;
 
         for (int i = 0; i < currentPlayingAnimators.Count; i++)
         {
@@ -202,7 +201,7 @@ public class CheeseGratingManager : MonoBehaviour
 
     IEnumerator ChangeIsMove()
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.1f);
         isMoving = false;
     }
 
@@ -215,20 +214,12 @@ public class CheeseGratingManager : MonoBehaviour
         anim.Play("Grate");
     }
 
-    void RandomCheeseBlobs()
-    {
-        int random = Random.Range(0, cheeseBlobs.Count);
-        cheeseBlobs[random].SetActive(true);
-        Timer.Delay(2.0f, () =>
-        {
-            cheeseBlobs[random].SetActive(false);
-        });
-    }
+
 
     void AddToList<T>(Transform parent, List<T> list)
     {
         list.Clear();
-        for(int i = 0; i < parent.childCount; i++)
+        for (int i = 0; i < parent.childCount; i++)
         {
             list.Add(parent.GetChild(i).GetComponent<T>());
         }
@@ -236,12 +227,12 @@ public class CheeseGratingManager : MonoBehaviour
     void AddToList(Transform parent, List<GameObject> list)
     {
         list.Clear();
-        for(int i = 0; i < parent.childCount; i++)
+        for (int i = 0; i < parent.childCount; i++)
         {
             list.Add(parent.GetChild(i).gameObject);
         }
     }
-    
+
     // void OnDrawGizmos()
     // {
     //     Gizmos.color = Color.red;
