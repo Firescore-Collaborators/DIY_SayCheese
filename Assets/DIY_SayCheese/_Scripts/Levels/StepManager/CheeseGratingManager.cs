@@ -7,7 +7,9 @@ public class CheeseGratingManager : MonoBehaviour
     public MeshRenderer cheeseBlock;
 
     [SerializeField] List<SkinnedMeshRenderer> cheeseList = new List<SkinnedMeshRenderer>();
+    [SerializeField] Transform cheeseBlobParent;
     List<Animator> currentPlayingAnimators = new List<Animator>();
+    [SerializeField] List<GameObject> cheeseBlobs = new List<GameObject>();
     public GameObject cheeseOnGrate;
     public float cheeseMaskLerpSpeed = 12f;
     public float cheeseMaskLerpValue = 0;
@@ -40,6 +42,9 @@ public class CheeseGratingManager : MonoBehaviour
     {
         cheeseStartPos = cheeseBlock.transform.position;
         cheeseParent = cheeseBlock.transform.parent;
+        //AddToList(cheeseBlobParent,cheeseBlobs);
+        cheeseBlobs.Clear();
+        AddToList(cheeseBlobParent, cheeseBlobs);
         AssignDirection();
     }
 
@@ -119,6 +124,7 @@ public class CheeseGratingManager : MonoBehaviour
             LerpRandomCheeese();
             LerpRandomCheeese();
             LerpRandomCheeese();
+            RandomCheeseBlobs();
         }
 
         //Horizontal
@@ -209,11 +215,43 @@ public class CheeseGratingManager : MonoBehaviour
         anim.Play("Grate");
     }
 
-    void SpawnRandomCheese()
+    void RandomCheeseBlobs()
     {
-        Vector3 pos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), Random.Range(-size.y / 2, size.y / 2), Random.Range(-size.z / 2, size.z / 2));
-        GameObject cheese = Instantiate(cheeseOnGrate, pos, Quaternion.identity);
-        cheese.transform.parent = cheeseParent;
+        int random = Random.Range(0, cheeseBlobs.Count);
+        cheeseBlobs[random].SetActive(true);
+        Timer.Delay(2.0f, () =>
+        {
+            cheeseBlobs[random].SetActive(false);
+        });
     }
+
+    void AddToList<T>(Transform parent, List<T> list)
+    {
+        list.Clear();
+        for(int i = 0; i < parent.childCount; i++)
+        {
+            list.Add(parent.GetChild(i).GetComponent<T>());
+        }
+    }
+    void AddToList(Transform parent, List<GameObject> list)
+    {
+        list.Clear();
+        for(int i = 0; i < parent.childCount; i++)
+        {
+            list.Add(parent.GetChild(i).gameObject);
+        }
+    }
+    
+    // void OnDrawGizmos()
+    // {
+    //     Gizmos.color = Color.red;
+    //     Gizmos.DrawWireCube(center, size);
+    // }
+    // void SpawnRandomCheese()
+    // {
+    //     Vector3 pos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), 0, Random.Range(-size.z / 2, size.z / 2));
+    //     GameObject cheese = Instantiate(cheeseOnGrate, pos, Quaternion.identity);
+    //     cheese.transform.parent = cheeseParent;
+    // }
 }
 
