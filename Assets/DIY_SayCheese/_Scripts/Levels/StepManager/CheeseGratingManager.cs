@@ -184,12 +184,13 @@ public class CheeseGratingManager : MonoBehaviour
 
     void IsMoving()
     {
-        if (dragDir == 0)
+        if (dragDir <= 0)
         {
             if (coroutineStarted) return;
 
             coroutineStarted = true;
-            StartCoroutine(ChangeIsMove());
+            isMoving = false;
+            //StartCoroutine(ChangeIsMove());
         }
         else
         {

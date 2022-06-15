@@ -6288,8 +6288,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.529502, y: 0.06543626, z: 1.5152131}
-  m_Center: {x: 0.32862082, y: 0, z: 0}
+  m_Size: {x: 2.529502, y: 0.12109226, z: 1.5152131}
+  m_Center: {x: 0.3286208, y: 0.027828008, z: 0}
 --- !u!1 &788333089 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4027021157775213186, guid: 0f1d329bc08b60646880e8920a6ffe10,
@@ -6326,7 +6326,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &791264887
 Transform:
   m_ObjectHideFlags: 0
@@ -7573,7 +7573,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &919700632
 Transform:
   m_ObjectHideFlags: 0
@@ -10858,6 +10858,11 @@ PrefabInstance:
         type: 3}
       propertyPath: InitialModule.size3D
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1680412412039873113, guid: a2bbe36be1db8ae4a9a371de482b5211,
+        type: 3}
+      propertyPath: InitialModule.maxNumParticles
+      value: 2000
       objectReference: {fileID: 0}
     - target: {fileID: 1680412412039873113, guid: a2bbe36be1db8ae4a9a371de482b5211,
         type: 3}
