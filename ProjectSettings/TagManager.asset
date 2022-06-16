@@ -8,6 +8,8 @@ TagManager:
   - Body
   - Scale
   - Cancel
+  - FxTemporaire
+  - CutterCheck
   layers:
   - Default
   - TransparentFX

@@ -2,52 +2,53 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public  class LerpObjectPositionBehavior : MonoBehaviour
+public class LerpObjectPositionBehavior : MonoBehaviour
 {
-    bool toLerp = false;
+    public bool toLerp = false;
     float lerpSpeed;
     float lerpTime;
-    
+
     Vector3 initPos;
     Vector3 finalPos;
     Transform currentObject;
 
     System.Action lerpComplete;
 
-    
+
     void Update()
     {
-        if(toLerp == false)
+        if (toLerp == false)
             return;
 
-        currentObject.transform.position = Vector3.Lerp(initPos,finalPos,lerpTime);
+        currentObject.transform.position = Vector3.Lerp(initPos, finalPos, lerpTime);
 
-        if(lerpTime < 1.0f)
+        if (lerpTime < 1.0f)
         {
-            lerpTime += Time.deltaTime/lerpSpeed;
+            lerpTime += Time.deltaTime / lerpSpeed;
         }
-        else{
+        else
+        {
             toLerp = false;
             lerpTime = 0;
-            if(lerpComplete != null)
+            if (lerpComplete != null)
             {
                 lerpComplete.Invoke();
             }
         }
-        
+
     }
-    public void LerpObject(Transform lerpObject, Vector3 _finalPos, float speed, System.Action _lerpComplete = null)
+    public void LerpObject(Transform lerpObject, Vector3 _finalPos, float speed, System.Action _lerpComplete = null, bool startLerpAuto = true)
     {
         currentObject = lerpObject;
         initPos = currentObject.transform.position;
         finalPos = _finalPos;
         lerpSpeed = speed;
         lerpTime = 0;
-        if(_lerpComplete != null)
+        if (_lerpComplete != null)
             lerpComplete = _lerpComplete;
         else
             lerpComplete = null;
-
-        toLerp = true;
+        if (startLerpAuto)
+            toLerp = true;
     }
 }

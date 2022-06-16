@@ -12,6 +12,9 @@ public class MeshSliceFakeController : MonoBehaviour
     public GameObject currentBendDeform;
     public GameObject currentBoxMask;
     public GameObject boxMaskEndTransform;
+    public RespondMessage respondMessage;
+    public GameObject particleFx;
+    public Collider cutterCollider;
     public Transform cutter;
     public Transform bend;
     public Transform levelObject;
@@ -24,7 +27,8 @@ public class MeshSliceFakeController : MonoBehaviour
     [SerializeField] int stopSliceAt = 3;
     [SerializeField] bool canMove = true;
     [SerializeField] bool toCheck;
-    bool toLerp;
+    [SerializeField] bool toSetInput = false;
+    public bool toLerp;
     float lerpTime;
     public float lerpSpeed;
     [SerializeField] float distance;
@@ -71,11 +75,36 @@ public class MeshSliceFakeController : MonoBehaviour
 
     void Update()
     {
+        SetInput();
         Movement();
         CheckForSlice();
         LerpBoxMask();
     }
 
+    void SetInput()
+    {
+        if (!toSetInput) return;
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            LerpObjectPosition.instance.toLerp = true;
+            LerpObjectRotation.instance.toLerp = true;
+            if (currentBoxMask != null)
+            {
+                currentBoxMask.GetComponent<LerpObjectPositionBehavior>().toLerp = true;
+            }
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            LerpObjectPosition.instance.toLerp = false;
+            LerpObjectRotation.instance.toLerp = false;
+            if (currentBoxMask != null)
+            {
+                currentBoxMask.GetComponent<LerpObjectPositionBehavior>().toLerp = false;
+            }
+        }
+    }
 
     void Movement()
     {
@@ -99,36 +128,46 @@ public class MeshSliceFakeController : MonoBehaviour
 
     void OnSlice()
     {
-        LerpObjectRotation.instance.LerpObject(cutter, cutterCutTransform.rotation, cutSpeed);
-        currentBoxMask.AddComponent<LerpObjectPositionBehavior>().LerpObject(currentBoxMask.transform, boxMaskEndTransform.transform.position, maskMoveSpeed);
-        Timer.Delay(1.75f,()=>
-        {
-            toLerp = true;
-        });
+        toSetInput = true;
+        LerpObjectRotation.instance.LerpObject(cutter, cutterCutTransform.rotation, cutSpeed, null, false);
+        currentBoxMask.AddComponent<LerpObjectPositionBehavior>().LerpObject(currentBoxMask.transform, boxMaskEndTransform.transform.position, maskMoveSpeed,null,false);
+        // Timer.Delay(1.75f, () =>
+        // {
+        //     print(LerpObjectRotation.instance.lerpTime);
+        //     toLerp = true;
+        // });
         LerpObjectPosition.instance.LerpObject(currentBendDeform.transform, bendEndTransform.position, cutSpeed, () =>
         {
             SliceFinished?.Invoke();
-        });
+        },false);
     }
 
     void LerpBoxMask()
     {
-        if(!toLerp) return;
-        
+        if (!toLerp) return;
+
         currentBoxMask.GetComponent<BoxMask>().Factor = Mathf.Lerp(1, 0, lerpTime);
-        if(lerpTime < 1.0f)
+        if (lerpTime < 1.0f)
         {
-            lerpTime += Time.deltaTime/lerpSpeed;
+            lerpTime += Time.deltaTime / lerpSpeed;
         }
-        else{
+        else
+        {
             toLerp = false;
             lerpTime = 0;
         }
-        
+
     }
 
     void OnSliceFinished()
-    {
+    {   
+        particleFx.SetActive(true);
+        respondMessage.ShowCorrectResponse();
+        Timer.Delay(1.5f, () =>
+        {
+            particleFx.SetActive(false);
+        });
+        toSetInput = false;
         currentBendDeform.transform.parent = null;
         Rigidbody rb = cheeseSlice[currentSliceIndex].gameObject.GetComponent<Rigidbody>();
         rb.isKinematic = false;
@@ -139,9 +178,14 @@ public class MeshSliceFakeController : MonoBehaviour
             currentSliceIndex++;
             canMove = true;
             toCheck = true;
+            cutterCollider.enabled = true;
             if (currentSliceIndex >= stopSliceAt)
             {
                 this.enabled = false;
+                Timer.Delay(1.5f,()=>
+                {
+                    GameManager.Instance.NextStep();
+                });
             }
         });
     }
