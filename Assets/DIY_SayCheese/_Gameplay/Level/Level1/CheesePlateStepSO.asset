@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: CheesePlateStepSO
   m_EditorClassIdentifier: 
   stepType: 2
-  cameraName: TopDown
+  cameraName: Plating
   blendSpeed: 1

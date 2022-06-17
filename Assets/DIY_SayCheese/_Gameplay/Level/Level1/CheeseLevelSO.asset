@@ -16,7 +16,7 @@ MonoBehaviour:
     type: 3}
   levelType: 1
   steps:
-  - {fileID: 11400000, guid: 42c91662c1a705f4aae28ced796073c8, type: 2}
+  - {fileID: 11400000, guid: 360e358cd88be4446ab7aadc4de9710e, type: 2}
   - {fileID: 11400000, guid: 360e358cd88be4446ab7aadc4de9710e, type: 2}
   - {fileID: 11400000, guid: 88c411f5979f97f4ba72b301a9801599, type: 2}
   - {fileID: 11400000, guid: b8c7066e6fe32834d87e9a897c02a61f, type: 2}
