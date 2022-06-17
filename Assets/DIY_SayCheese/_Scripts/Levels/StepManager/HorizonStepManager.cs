@@ -5,6 +5,7 @@ using DG.Tweening;
 using SplineMesh;
 using Deform;
 using TMPro;
+using UnityEngine.SceneManagement;
 //using 
 
 public class HorizonStepManager : MonoBehaviour
@@ -26,6 +27,7 @@ public class HorizonStepManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public LevelScore levelScore;
     public GameObject finalFoodHolder;
+    public Canvas nextLevelCanvas;
 
     public enum HorizontalCuttingStates
     {
@@ -152,11 +154,21 @@ public class HorizonStepManager : MonoBehaviour
         Vector3 rotateVector = new Vector3(finalFoodHolder.transform.rotation.eulerAngles.x, -180, finalFoodHolder.transform.rotation.eulerAngles.z);
         finalFoodHolder.transform.DOLocalRotate(rotateVector, 2f, RotateMode.Fast).SetLoops(-1,LoopType.Incremental).SetEase(Ease.Linear);
         Confetti.SetActive(true);
+        Timer.Delay(3.5f, LoadNextLevelCanvas);
     }
-
+     public void LoadNextLevelCanvas()
+    {
+        nextLevelCanvas.gameObject.SetActive(true);
+        Confetti.gameObject.SetActive(false);
+    }
     public void NextLevelButton()
     {
-        Scene scene = SceneManager.GetActiveScene(); 
-        SceneManager.LoadScene(scene.name);
+        nextLevelCanvas.gameObject.SetActive(false);
+        GameManager.Instance.levels.CurrentLevel++;
+        if(GameObject.Find("/Timer")!=null)
+        {
+            Destroy(GameObject.Find("/Timer"));
+        }
+        Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
     }
 }

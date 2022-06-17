@@ -10,9 +10,12 @@ using UnityEngine;
 
         static void CreateTimer()
         {
+       
+
             GameObject go = new GameObject("Timer");
             go.AddComponent<Timer>();
             instance = go.GetComponent<Timer>();
+        
         }
 
 

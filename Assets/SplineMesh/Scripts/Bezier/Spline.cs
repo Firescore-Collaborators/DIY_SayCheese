@@ -108,6 +108,7 @@ namespace SplineMesh {
         {
             KnifeScript.KnifeMoved += UpdateNodePosWithKnife;
             prevValuePos = HorizonStepManager.Inst.cheeseSlicer.transform.position.x;
+
         }
         private void OnDestroy()
         {

@@ -14,12 +14,17 @@ public class LevelScore : MonoBehaviour
     public static float percentageAccuracy;
     Transform cutpoint,testObj;
 
+    public List<Color> wallColors;
+    public Material wallMat;
+    public Material floorMat;
+
     // Start is called before the first frame update
     void Start()
     {
         spline = GetComponent<Spline>();
         cutpoint = HorizonStepManager.Inst.cheeseSlicer.transform.GetChild(0).transform;
         testObj = HorizonStepManager.Inst.testObj.transform;
+        LevelInitialiser();
     }
 
     // Update is called once per frame
@@ -57,12 +62,16 @@ public class LevelScore : MonoBehaviour
     public void LevelInitialiser()
     {
         Random.InitState(System.DateTime.Now.Millisecond);
+        int k = Random.Range(0, wallColors.Count-1);
+        wallMat.color = wallColors[k];
+        floorMat.color = wallColors[k];
+        //floorMat.
         previousTemp = spline.nodes[0].Position;
         percentageAccuracy = 0;
         for (int i = 0; i < spline.nodes.Count; i++)
         {
-            spline.nodes[i].Position = new Vector3(spline.nodes[i].Position.x, Random.Range(-0.65f, 0.65f), spline.nodes[i].Position.z);
-            spline.nodes[i].Direction = new Vector3(spline.nodes[i].Direction.x, Random.Range(-0.65f, 0.65f), spline.nodes[i].Direction.z);
+            //spline.nodes[i].Position = new Vector3(spline.nodes[i].Position.x, Random.Range(-0.65f, 0.65f), spline.nodes[i].Position.z);
+            spline.nodes[i].Direction = new Vector3(spline.nodes[i].Direction.x, Random.Range(-0.40f, 0.18f), spline.nodes[i].Direction.z);
         }
     }
 }
