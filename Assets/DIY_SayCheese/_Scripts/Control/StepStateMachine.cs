@@ -9,6 +9,7 @@ public static class StepStateMachine
         {StepType.cutting, "CuttingStepState"},
         {StepType.levelEnd, "LevelCompleteStepState"},
         {StepType.plate, "CheesePlateStepState"},
+        {StepType.horizon,"HorizonStepState" }
     };
 
 

@@ -7,6 +7,7 @@ public enum StepType
     cutting = 0,
     levelEnd = 1,
     plate = 2,
+    horizon=3
 }
 public class StepSO : ScriptableObject
 {

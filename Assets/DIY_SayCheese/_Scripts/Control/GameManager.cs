@@ -39,11 +39,13 @@ public class GameManager : MonoBehaviour
     public Transform lvlObjSpawnPoint;
     public LevelObject levelObject;
     public GameStepState currentStepState;
+    public Joystick joystick;
 
     void SwitchStep(StepType stepType)
     {
         if(StepStateMachine.stepStates.ContainsKey(stepType))
         {
+            Debug.Log("Current step = "+stepType);
             currentStepState = GetComponent(StepStateMachine.stepStates[stepType]) as GameStepState;
             if(currentStepState != null)
             {
@@ -57,6 +59,9 @@ public class GameManager : MonoBehaviour
     }
     private void OnEnable() {
         CurrentLevel.Reset += OnLevelReset;
+        int levelCounter = PlayerPrefs.GetInt("LevelCount");
+        levelCounter++;
+        PlayerPrefs.SetInt("LevelCount", levelCounter);
     }
 
     private void OnDisable() {
@@ -98,6 +103,7 @@ public class GameManager : MonoBehaviour
         if(currentStepIndex < CurrentLevel.steps.Count)
         {
             SwitchStep(CurrentStep.stepType);
+
             CurrentStep.OnStepStart();
         }
 
