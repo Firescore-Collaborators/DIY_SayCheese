@@ -8,10 +8,14 @@ public class CheeseGratingManager : MonoBehaviour
     public static event System.Action cheeseBlobSpawned;
     public CameraShake cameraShake;
     public MeshRenderer cheeseBlock;
+    public GameObject emoji;
     [SerializeField] List<SkinnedMeshRenderer> cheeseList = new List<SkinnedMeshRenderer>();
     List<Animator> currentPlayingAnimators = new List<Animator>();
+    public float cheeseFinishAmount = 30.0f;
+    public float currentCheeseAmount;
     public float cheeseMaskLerpSpeed = 12f;
     public float cheeseMaskLerpValue = 0;
+    bool toSetInput = true;
     public bool held = false;
     public bool toMove = true;
     public bool toSpawnBlob = true;
@@ -35,8 +39,8 @@ public class CheeseGratingManager : MonoBehaviour
     public float cheeseSpawnAmount = 0.3f;
     public float cameraShakeInterval = 0.5f;
 
-
-
+    public float emojiSpawnInterval = 2f;
+    float currentEmojiTimer;
     void Start()
     {
         Init();
@@ -62,6 +66,8 @@ public class CheeseGratingManager : MonoBehaviour
 
     void SetInput()
     {
+        if(!toSetInput) return;
+
         if (Input.GetMouseButtonDown(0))
         {
             held = true;
@@ -125,7 +131,7 @@ public class CheeseGratingManager : MonoBehaviour
                 cheeseParticle.Stop();
             }
             return;
-        }
+        }   
 
         cheeseBlock.transform.position += moveDir * cheeseMoveSpeed * Time.deltaTime;
 
@@ -137,10 +143,32 @@ public class CheeseGratingManager : MonoBehaviour
         //Cheese Mask
         CheeseMask();
 
+        //Cheese Amount
+        currentCheeseAmount += Time.deltaTime;
+        if (currentCheeseAmount >= cheeseFinishAmount)
+        {
+            toSetInput = false;
+            cheeseParticle.Stop();
+            this.enabled = false;
+            Timer.Delay(1.0f, () =>
+            {
+                GameManager.Instance.NextStep();
+            });
+        }
         //Grated amount
+        currentEmojiTimer += Time.deltaTime;
         gratedAmount += Time.deltaTime;
         shakeDuration += Time.deltaTime;
 
+        if(currentEmojiTimer >= emojiSpawnInterval)
+        {
+            currentEmojiTimer = 0;
+            emoji.SetActive(true);
+            Timer.Delay(2.0f, () =>
+            {
+                emoji.SetActive(false);
+            });
+        }
         if(shakeDuration >= cameraShakeInterval)
         {
             cameraShake.Shake();

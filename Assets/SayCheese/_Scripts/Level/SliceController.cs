@@ -5,10 +5,6 @@ using NaughtyAttributes;
 using BzKovSoft.ObjectSlicer.Samples;
 using Deform;
 
-public enum Direction
-{
-    Up, Down, Left, Right, Forward, Back
-}
 public class SliceController : MonoBehaviour
 {
     BendDeformer currentBendDeformer;

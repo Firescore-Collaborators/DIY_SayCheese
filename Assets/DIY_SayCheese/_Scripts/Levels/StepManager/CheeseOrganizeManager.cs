@@ -13,7 +13,9 @@ public class CheeseOrganizeManager : MonoBehaviour
     [SerializeField] bool drag;
     public GameObject spawnObject;
     public Transform cheesePlate;
+    public Transform lerpPos;
     public Transform spawnParent;
+    public Transform panel;
     Vector3 lastMousePos;
     public Image fillImage;
     [SerializeField] LayerMask layer;
@@ -97,11 +99,7 @@ public class CheeseOrganizeManager : MonoBehaviour
             currentZone++;
             if (currentZone >= plateQuarters.Count)
             {
-                this.enabled = false;
-                Timer.Delay(2f, () =>
-                {
-                    GameManager.Instance.NextStep();
-                });
+                StepComplete();
                 return;
             }
             Timer.Delay(1.5f, () =>
@@ -109,6 +107,35 @@ public class CheeseOrganizeManager : MonoBehaviour
                 Rotate();
             });
         }
+    }
+
+    public void StepComplete()
+    {
+        CameraController.instance.SetCurrentCamera("PlatingFinish", 1);
+        panel.gameObject.SetActive(false);
+        Timer.Delay(1.5f, () =>
+        {
+            LerpObjectPosition.instance.LerpObject(cheesePlate, lerpPos.transform.position, 1f, () =>
+            {
+                LerpObjectLocalRotation.instance.LerpObject(cheesePlate, lerpPos.transform.rotation, 1f, () =>
+                {
+                    cheesePlate.GetComponent<ObjectRotate>().enabled = true;
+                    Timer.Delay(2.0f, () =>
+                    {
+                        CameraSpaceEffects.instance.SpawnEFX(CameraSpaceEffects.instance.confetti);
+                        Timer.Delay(0.5f,()=>
+                        {
+                            UIElements.instance.gameObject.GetComponent<RespondMessage>().ShowCorrectResponse(UIElements.instance.gameObject.GetComponent<RespondMessage>().correctList1);
+                        });
+                        Timer.Delay(2.0f, () =>
+                        {
+                            GameManager.Instance.NextStep();
+                        });
+
+                    });
+                });
+            });
+        });
     }
 
     [Button]

@@ -7,9 +7,13 @@ using NaughtyAttributes;
 public class RespondMessage : MonoBehaviour
 {
     public List<string> correctMessage = new List<string>();
+    public List<string> correctList1 = new List<string>();
+    public List<string> correctList2 = new List<string>();
     public List<string> wrongMessage = new List<string>();
     public float scaleValue = 1.2f;
     public float moveValue = 20f;
+    public float scaleSpeed = 0.50f;
+    public float moveSpeed = 5f;
     public Text messageText;
     public Vector3 startPos;
     DG.Tweening.Core.TweenerCore<Vector3, Vector3, DG.Tweening.Plugins.Options.VectorOptions> scaleTween;
@@ -25,6 +29,13 @@ public class RespondMessage : MonoBehaviour
         MoveText();
     }
 
+    public void ShowCorrectResponse(List<string> correctList)
+    {
+        int rand = Random.Range(0, correctList.Count);
+        messageText.text = correctList[rand];
+        MoveText();
+    }
+
     [Button]
     void MoveText()
     {
@@ -32,8 +43,8 @@ public class RespondMessage : MonoBehaviour
         moveTween.Kill();
         messageText.transform.position = startPos;
         messageText.gameObject.SetActive(true);
-        scaleTween = messageText.transform.DOScale(messageText.transform.localScale + (Vector3.one * scaleValue), 0.2f).SetLoops(2, LoopType.Yoyo);
-        moveTween = messageText.transform.DOMoveY(messageText.transform.position.y + moveValue, 2f).OnComplete(() =>
+        scaleTween = messageText.transform.DOScale(messageText.transform.localScale + (Vector3.one * scaleValue), scaleSpeed).SetLoops(2, LoopType.Yoyo);
+        moveTween = messageText.transform.DOMoveY(messageText.transform.position.y + moveValue, moveSpeed).OnComplete(() =>
         {
             messageText.gameObject.SetActive(false);
         });

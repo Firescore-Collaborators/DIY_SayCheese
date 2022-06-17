@@ -63,6 +63,10 @@ public class MeshSliceFakeController : MonoBehaviour
         InitSlices();
         AssingDir();
         cutterStartRot = cutter.transform.rotation;
+        Timer.Delay(1.5f,()=>
+        {
+            canMove = true;
+        });
     }
 
     void InitSlices()
