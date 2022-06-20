@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: CheeseMeltSO
   m_EditorClassIdentifier: 
   stepType: 5
-  cameraName: Grating
+  cameraName: CheeseMelt
   blendSpeed: 1

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d15693c07f2b69b40b314b49353720b5, type: 3}
   m_Name: Cheese Melt Plate Step
   m_EditorClassIdentifier: 
-  stepType: 0
-  cameraName: 
-  blendSpeed: 0
+  stepType: 6
+  cameraName: BurgerPlate
+  blendSpeed: 1
