@@ -7,7 +7,7 @@ public class CheeseMeltManager : MonoBehaviour
 {
     public List<PerlinNoiseDeformer> cheeseMeltDeformers = new List<PerlinNoiseDeformer>();
     public ParticleSystem cheeseBubbles;
-
+    public HeatGun heatGun;
     [Range(0,1f)]
     public float meltAmount;
     public float maxAmount = 0.025f;
