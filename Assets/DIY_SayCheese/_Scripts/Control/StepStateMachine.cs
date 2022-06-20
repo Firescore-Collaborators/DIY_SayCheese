@@ -11,6 +11,7 @@ public static class StepStateMachine
         {StepType.plate, "CheesePlateStepState"},
         {StepType.grate, "CheeseGrateStepState"},
         {StepType.pastaPlate, "CheesePastaStepState"},
+        {StepType.melt, "CheeseMeltStepState"}
     };
 
 

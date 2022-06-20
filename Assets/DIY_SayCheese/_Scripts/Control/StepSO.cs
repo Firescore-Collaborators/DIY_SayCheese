@@ -9,6 +9,7 @@ public enum StepType
     plate = 2,
     grate = 3,
     pastaPlate = 4,
+    melt = 5,
 }
 public class StepSO : ScriptableObject
 {

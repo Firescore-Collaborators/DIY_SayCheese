@@ -69,7 +69,7 @@ namespace PaintIn3D
 		{
 			Tools.current = Tool.Custom;
 
-			ToolManager.SetActiveTool<P3dSceneTool>();
+			EditorTools.SetActiveTool<P3dSceneTool>();
 		}
 
 		protected virtual void OnEnable()
